@@ -1,20 +1,19 @@
 package com.ga.bank;
+import java.io.*;
 import java.util.Scanner;
-import java.io.File;
-import java.io.IOException;
+import java.util.StringJoiner;
+
 
 public class Main {
-//    public static Account account;
-//    public static String username;
-//    public static String userType
+
         public static Scanner scanner;
-//
-//    public static int id;
+
     public Main(){
-//        scanner = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        FileWriter fw = new FileWriter("../data.txt", true);
+        System.out.println(fw);
         scanner = new Scanner(System.in);
         System.out.println("Welcome to the bank service system");
         System.out.println("1. Sign up");
@@ -50,9 +49,8 @@ public class Main {
         }
     }
 
-    public static void signUp(){
-        int id; String firstName; String lastName; String userName; String email; String password; Object userType;
-        id = 9;
+    public static void signUp() throws IOException {
+         String firstName; String lastName; String userName; String email; String password; Object userType;
         System.out.println("Enter first name: ");
         firstName = scanner.next();
         System.out.println("Enter last name: ");
@@ -68,5 +66,23 @@ public class Main {
 
         Account account = new Account(firstName, lastName,  userName,  email,  password,  userType, 0);
         createFile(account.user.userType.toString(), account.user.userName, account.user.id );
+        System.out.println(account);
+        addingData(account);
+    }
+
+    public static void addingData(Account account) throws IOException {
+        String [] addDetails = {new Account(User.getFirstName(), User.getLastName(), User.getUserName(), User.getEmail(), User.getPassword(), User.getUserType(), 0).toString()};
+        FileWriter fw = new FileWriter("data.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        StringJoiner stringJoiner = new StringJoiner(",");
+        String joinDetails = "";
+        for (String user : addDetails ){
+            joinDetails = String.valueOf(stringJoiner.add(user));
+        }
+        bw.write(joinDetails);
+        bw.newLine();
+        bw.close();
+        //System.out.println(account.getUser().toString());
+
     }
 }
