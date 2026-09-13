@@ -1,7 +1,9 @@
 package com.ga.bank;
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.util.StringJoiner;
+import java.security.MessageDigest;
 
 
 public class Main {
@@ -11,7 +13,14 @@ public class Main {
     public Main(){
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+        File myObj = new File("../data.txt");
+        if(myObj.exists()){
+            System.out.println("file size in bytes " + myObj.toURI());
+        }
+
+
+
         FileWriter fw = new FileWriter("../data.txt", true);
         System.out.println(fw);
         scanner = new Scanner(System.in);
@@ -49,8 +58,8 @@ public class Main {
         }
     }
 
-    public static void signUp() throws IOException {
-         String firstName; String lastName; String userName; String email; String password; Object userType;
+    public static void signUp() throws IOException, NoSuchAlgorithmException {
+        String firstName; String lastName; String userName; String email; String password; Object userType;
         System.out.println("Enter first name: ");
         firstName = scanner.next();
         System.out.println("Enter last name: ");
@@ -61,28 +70,46 @@ public class Main {
         email = scanner.next();
         System.out.println("Create password: ");
         password = scanner.next();
+        password = cryptographic(password);
         System.out.println("Enter user type: ");
         userType = scanner.next();
 
-        Account account = new Account(firstName, lastName,  userName,  email,  password,  userType, 0);
-        createFile(account.user.userType.toString(), account.user.userName, account.user.id );
-        System.out.println(account);
+        Account account = new Account(firstName, lastName, userName, email, password, userType, 0);
+        createFile(account.getUserType(), account.getUserName(), account.getID());
+
+
         addingData(account);
     }
 
     public static void addingData(Account account) throws IOException {
-        String [] addDetails = {new Account(User.getFirstName(), User.getLastName(), User.getUserName(), User.getEmail(), User.getPassword(), User.getUserType(), 0).toString()};
         FileWriter fw = new FileWriter("data.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
-        StringJoiner stringJoiner = new StringJoiner(",");
-        String joinDetails = "";
-        for (String user : addDetails ){
-            joinDetails = String.valueOf(stringJoiner.add(user));
-        }
-        bw.write(joinDetails);
+
+        bw.write(account.toString());
         bw.newLine();
+
         bw.close();
         //System.out.println(account.getUser().toString());
 
+    }
+
+    public static String cryptographic(String pass) throws NoSuchAlgorithmException {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] passBytes = pass.getBytes();
+            md.update(passBytes);
+            passBytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i: passBytes){
+                // i searched and found i have to keep iy
+               sb.append(Integer.toHexString(i & 0xff));
+            }
+            return sb.toString();
+
+        } catch (NoSuchAlgorithmException exception){
+            System.err.println("Exception occurred: " + exception);
+        }
+
+        return "";
     }
 }

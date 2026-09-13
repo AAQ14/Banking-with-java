@@ -1,7 +1,6 @@
 package com.ga.bank;
 
 public class Account extends User {
-    public User user;
     boolean isAvailable;
 
     public Account(String firstName, String lastName, String userName, String email, String password, Object userType, double amount) {
@@ -10,8 +9,43 @@ public class Account extends User {
 
 
     @Override
-    public int gerID() {
-        return 0;
+    public int getID() {
+        return id;
+    }
+
+    @Override
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @Override
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String getUserName() {
+        return userName;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUserType() {
+        return userType.toString();
+    }
+
+    @Override
+    public double getAmount() {
+        return amount;
     }
 
     public boolean isAvailable() {
@@ -22,12 +56,11 @@ public class Account extends User {
         isAvailable = available;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public int getId() {
+        return id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+
 
 }
