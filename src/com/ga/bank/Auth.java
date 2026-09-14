@@ -10,7 +10,15 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Auth {
-    public static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner;
+    public static FileManager fm;
+    public static Customer customer;
+    public static Banker banker;
+
+    public Auth(){
+        scanner = new Scanner(System.in);
+        fm = new FileManager();
+    }
 
     public static void signUp() throws IOException, NoSuchAlgorithmException {
         String firstName; String lastName; String userName; String email; String password; String userType;
@@ -30,23 +38,20 @@ public class Auth {
         System.out.println(userType);
 
         if(userType.equals("C")){
-            Customer user = new Customer(firstName, lastName, userName, email, password, userType, 0);
-            System.out.println(user);
-            System.out.println("user type: " + user.getUserType() + ",  username: " + user.getUserName() + ",  user id: " +user.getId());
-            UserFileManager.createFile(user.getUserType(), user.getUserName(), user.getId());
-            UserFileManager.addingData(user);
+            customer = new Customer(firstName, lastName, userName, email, password, userType, 0);
+            FileManager.createFile(customer.getUserType(), customer.getUserName(), customer.getId());
+            FileManager.addingData(customer);
         }else if (userType.equals("B")) {
-            Banker user = new Banker(firstName, lastName, userName, email, password, userType, 0);
-            System.out.println(user);
-            UserFileManager.createFile(user.getUserType(), user.getUserName(), user.getId());
-            UserFileManager.addingData(user);
+            banker = new Banker(firstName, lastName, userName, email, password, userType, 0);
+            FileManager.createFile(banker.getUserType(), banker.getUserName(), banker.getId());
+            FileManager.addingData(banker);
         }
 
 
     }
 
-    public static void signIn() throws IOException, NoSuchAlgorithmException {
-        String username; String pass;
+    public static User signIn() throws IOException, NoSuchAlgorithmException {
+        String username; String pass; User user =null;
         System.out.println("Enter username: ");
         username = scanner.next();
         System.out.println("Enter password: ");
@@ -59,20 +64,26 @@ public class Auth {
 //        System.out.println("test");
 //        lines.forEach(System.out::println);
         String line = br.readLine();
+        String cryptPass = cryptographic(pass);
 
         while(line!=null){
             String[] data = line.split(",");
-            String cryptPass = cryptographic(pass);
             if(Objects.equals(data[3], username) && Objects.equals(data[5], cryptPass)){
                 //find the user with the same username and assign it to the user
-
+                if(data[6].equals("C")){
+                    user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6], Double.parseDouble(data[7]));
+                } else if (data[6].equals("B")) {
+                    user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6], Double.parseDouble(data[7]));
+                }
                 System.out.println(username + " logged in");
 //                services(user);
-            }else{
-                System.out.println("username or password are incorrect");
             }
             line = br.readLine();
         }
+        if(user==null)
+            System.out.println("login failed");
+
+        return user;
     }
 
     public static String cryptographic(String pass) throws NoSuchAlgorithmException {
