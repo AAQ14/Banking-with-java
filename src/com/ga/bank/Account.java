@@ -1,66 +1,16 @@
 package com.ga.bank;
 
-public class Account extends User {
-    boolean isAvailable;
+import java.io.IOException;
 
-    public Account(String firstName, String lastName, String userName, String email, String password, Object userType, double amount) {
-        super(firstName, lastName, userName, email, password, userType, amount);
+public class Account{
+    public boolean isExists;
+    public double balance;
+    public String accountType;
+
+    public Account(String accountType){
+        isExists = true;
+        balance = 0;
+        this.accountType = accountType;
     }
-
-
-    @Override
-    public int getID() {
-        return id;
-    }
-
-    @Override
-    public String getFirstName() {
-        return firstName;
-    }
-
-    @Override
-    public String getLastName() {
-        return lastName;
-    }
-
-    @Override
-    public String getUserName() {
-        return userName;
-    }
-
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUserType() {
-        return userType.toString();
-    }
-
-    @Override
-    public double getAmount() {
-        return amount;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-
 
 }

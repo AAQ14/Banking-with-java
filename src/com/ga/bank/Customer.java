@@ -1,13 +1,24 @@
 package com.ga.bank;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Banker extends User{
+public class Customer extends User {
+    public ArrayList<Account> accounts;
 
-
-    public Banker(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
+    public Customer(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
         super(firstName, lastName, userName, email, password, userType, amount);
     }
+
+    public ArrayList<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(ArrayList<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+
 
     @Override
     public int getId() {
