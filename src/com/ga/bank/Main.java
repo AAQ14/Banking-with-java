@@ -8,15 +8,14 @@ import java.util.Scanner;
 import java.security.MessageDigest;
 import java.util.stream.Stream;
 
-import static com.ga.bank.Auth.signIn;
-import static com.ga.bank.Auth.signUp;
-
 
 public class Main {
 
         public static Scanner scanner;
+        public static Auth auth;
 
     public Main(){
+        auth = new Auth();
     }
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
@@ -29,12 +28,13 @@ public class Main {
 
         int reply = scanner.nextInt();
         if(reply ==1 ){
-         signUp();
+         auth.signUp();
         }else if(reply == 2){
-            signIn();
+            auth.signIn();
         }else if(reply == 3){
             scanner.close();
         }
+
     }
 
 

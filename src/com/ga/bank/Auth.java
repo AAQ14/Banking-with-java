@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class Auth {
-    public static Scanner scanner;
+    public static Scanner scanner= new Scanner(System.in);
     public static FileManager fm;
     public static Customer customer;
     public static Banker banker;
@@ -38,10 +38,12 @@ public class Auth {
         System.out.println(userType);
 
         if(userType.equals("C")){
+            User.readLastId();
             customer = new Customer(firstName, lastName, userName, email, password, userType, 0);
             FileManager.createFile(customer.getUserType(), customer.getUserName(), customer.getId());
             FileManager.addingData(customer);
         }else if (userType.equals("B")) {
+            User.readLastId();
             banker = new Banker(firstName, lastName, userName, email, password, userType, 0);
             FileManager.createFile(banker.getUserType(), banker.getUserName(), banker.getId());
             FileManager.addingData(banker);
@@ -83,6 +85,7 @@ public class Auth {
         if(user==null)
             System.out.println("login failed");
 
+        System.out.println("this is the user details that signed"+user.toString());
         return user;
     }
 

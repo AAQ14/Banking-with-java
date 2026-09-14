@@ -26,7 +26,6 @@ public abstract class User {
 
 
     public User(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
-        readLastId();
         num.incrementAndGet();
         this.id = num.intValue();
         this.firstName = firstName;
