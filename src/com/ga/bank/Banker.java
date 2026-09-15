@@ -5,8 +5,8 @@ import java.io.IOException;
 public class Banker extends User{
 
 
-    public Banker(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
-        super(firstName, lastName, userName, email, password, userType, amount);
+    public Banker(String firstName, String lastName, String userName, String email, String password, String userType) throws IOException {
+        super(firstName, lastName, userName, email, password, userType);
     }
 
     @Override
@@ -44,9 +44,5 @@ public class Banker extends User{
         return userType;
     }
 
-    @Override
-    public double getAmount() {
-        return 0;
-    }
 
 }

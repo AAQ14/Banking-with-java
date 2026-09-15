@@ -6,9 +6,12 @@ import java.util.ArrayList;
 public class Customer extends User {
     public ArrayList<Account> accounts;
 
-    public Customer(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
-        super(firstName, lastName, userName, email, password, userType, amount);
+    public Customer(String firstName, String lastName, String userName, String email, String password, String userType) throws IOException {
+        super(firstName, lastName, userName, email, password, userType);
+        accounts = new ArrayList<Account>();
     }
+
+
 
     public ArrayList<Account> getAccounts() {
         return accounts;
@@ -55,9 +58,5 @@ public class Customer extends User {
         return userType;
     }
 
-    @Override
-    public double getAmount() {
-        return 0;
-    }
 
 }

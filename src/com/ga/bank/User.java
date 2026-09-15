@@ -18,14 +18,12 @@ public abstract class User {
     public String email;
     public String password;
     public String userType;
-    //would it be preferable to make it static or?
-    public double amount;
     public static AtomicInteger num = new AtomicInteger(0);;
 
 //    protected abstract User();
 
 
-    public User(String firstName, String lastName, String userName, String email, String password, String userType, double amount) throws IOException {
+    public User(String firstName, String lastName, String userName, String email, String password, String userType) throws IOException {
         num.incrementAndGet();
         this.id = num.intValue();
         this.firstName = firstName;
@@ -34,7 +32,6 @@ public abstract class User {
         this.email = email;
         this.password = password;
         this.userType = userType;
-        this.amount = amount;
     }
 
     public abstract int getId();
@@ -51,7 +48,6 @@ public abstract class User {
 
     public abstract String getUserType();
 
-    public abstract double getAmount();
 
     @Override
     public String toString() {
@@ -62,8 +58,7 @@ public abstract class User {
                 getUserName() + "," +
                 getEmail() + "," +
                 getPassword() + "," +
-                getUserType() + "," +
-                getAmount();
+                getUserType();
     }
 
 

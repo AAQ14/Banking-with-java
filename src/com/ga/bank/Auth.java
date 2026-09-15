@@ -39,12 +39,12 @@ public class Auth {
 
         if(userType.equals("C")){
             User.readLastId();
-            customer = new Customer(firstName, lastName, userName, email, password, userType, 0);
+            customer = new Customer(firstName, lastName, userName, email, password, userType);
             FileManager.createFile(customer.getUserType(), customer.getUserName(), customer.getId());
             FileManager.addingData(customer);
         }else if (userType.equals("B")) {
             User.readLastId();
-            banker = new Banker(firstName, lastName, userName, email, password, userType, 0);
+            banker = new Banker(firstName, lastName, userName, email, password, userType);
             FileManager.createFile(banker.getUserType(), banker.getUserName(), banker.getId());
             FileManager.addingData(banker);
         }
@@ -73,9 +73,11 @@ public class Auth {
             if(Objects.equals(data[3], username) && Objects.equals(data[5], cryptPass)){
                 //find the user with the same username and assign it to the user
                 if(data[6].equals("C")){
-                    user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6], Double.parseDouble(data[7]));
+                    user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
+                    System.out.println(username + " logged in");
+                    Transactions.services((Customer) user);
                 } else if (data[6].equals("B")) {
-                    user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6], Double.parseDouble(data[7]));
+                    user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6]);
                 }
                 System.out.println(username + " logged in");
 //                services(user);
