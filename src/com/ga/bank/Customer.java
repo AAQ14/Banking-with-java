@@ -2,6 +2,7 @@ package com.ga.bank;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Customer extends User {
     public ArrayList<Account> accounts;
@@ -58,5 +59,13 @@ public class Customer extends User {
         return userType;
     }
 
+    public void createAccount(String accountType) throws IOException {
+       Optional<Account> account = accounts.stream().filter(account1 -> account1.accountType.equals(accountType)).findFirst();
+       if(account.isEmpty()){
+           Account newAccount = new Account(accountType);
+           accounts.add(newAccount);
+           FileManager.saveAccount(this, newAccount );
+       }
+    }
 
 }

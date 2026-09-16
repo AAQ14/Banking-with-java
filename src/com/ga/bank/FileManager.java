@@ -1,9 +1,6 @@
 package com.ga.bank;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FileManager {
 
@@ -12,13 +9,21 @@ public class FileManager {
     public static void createFile(String userType, String userName, int id)
     {
         try{
-            File myObj = new File(userType + "-" + userName +"-" + id +".txt");
-//            File myObj = new File(userType + "-" + username +"-" + id +".txt");
+            File myObj = new File(userType + "-" + userName +"-" + String.format("%05d", id)+".txt");
             if (myObj.createNewFile()){
                 System.out.println("File created: " + myObj.getName());
             }
             else{
                 System.out.println("File already exits.");
+            }
+            if(userType.equals("C")){
+                File myObj2 = new File(userType + "-" + userName +"-" + String.format("%05d", id)+ "-" + "transactions"+ ".txt");
+                if (myObj2.createNewFile()){
+                    System.out.println("File created: " + myObj.getName());
+                }
+                else{
+                    System.out.println("File already exits.");
+                }
             }
 
         }catch(IOException e){
@@ -40,5 +45,13 @@ public class FileManager {
 
     }
 
+    public static void saveAccount(Customer customer, Account account) throws IOException {
+        String fileName = customer.userType + "-" + customer.userName + "-" +String.format("%05d", customer.getId()) + ".txt";
+        FileWriter fw = new FileWriter(fileName, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(account.toString());
+        bw.newLine();
+        bw.close();
+    }
 
 }
