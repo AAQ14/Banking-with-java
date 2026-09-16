@@ -1,5 +1,8 @@
 package com.ga.bank;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Date;
@@ -7,7 +10,7 @@ import java.util.Scanner;
 import java.util.Optional;
 
 public class Transactions {
-    public User user;
+//    public User user;
     public double balance;
     public String from;
     public String to;
@@ -15,21 +18,21 @@ public class Transactions {
     public Time time;
     public static Customer customer;
     public static Scanner scanner = new Scanner(System.in);
+    public static FileReader fr;
+    public static BufferedReader br;
 
 
+//    public Transactions(User user) {
+//        this.user = user;
+//    }
 
-    public Transactions(User user) {
-        this.user = user;
+    public Transactions(Customer customer){
+        this.customer = customer;
     }
 
-    public void deposit(double amount){
-
-    }
-
-
-
-    public void deposit(Account account, double amount){
-
+    public static void deposit(Account account, double amount) throws IOException {
+            account.balance += amount;
+            FileManager.updateAccounts(customer, account);
     }
 
     public void withdrawal(Account account1, Account account2){

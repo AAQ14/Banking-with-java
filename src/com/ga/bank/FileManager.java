@@ -1,6 +1,10 @@
 package com.ga.bank;
 
 import java.io.*;
+import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileManager {
 
@@ -70,5 +74,29 @@ public class FileManager {
         }
         br.close();
     }
+
+    public static void updateAccounts(Customer customer, Account account) throws IOException {
+        File file = new File(customer.getUserType() + "-" + customer.getUserName() +"-" + String.format("%05d", customer.getId())+".txt");
+    FileReader fr = new FileReader(file);
+    BufferedReader br = new BufferedReader(fr);
+    List<String> lines = br.lines().collect(Collectors.toList());
+    br.close();
+
+    for(int i=0; i<lines.size(); i++){
+        String line = lines.get(i);
+        String[] parts = line.split(",");
+            if(parts[0].equals("ACCOUNT") && parts[1].equals(account.accountType)){
+                    lines.set(i, account.toString());
+        }
+    }
+
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (String line: lines){
+            bw.write(line);
+            bw.newLine();
+        }
+        bw.close();
+}
 
 }

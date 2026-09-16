@@ -29,7 +29,24 @@ public class Services {
                 customer.createAccount("Checking");
             }
         }else if(service ==2){
-            System.out.println("from which account you want to deposit");
+            Transactions transactions = new Transactions(customer);
+            System.out.println("in which account you want to deposit");
+            System.out.println("1. Saving account");
+            System.out.println("2. Checking account");
+            int accountSelected = scanner.nextInt();
+            if (accountSelected ==1) {
+                System.out.println("how much do u want to deposit");
+                double amount = scanner.nextDouble();
+                Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+                if(selectedAccount.isPresent()){
+                    System.out.println(customer.accounts);
+                    transactions.deposit(selectedAccount.get(), amount);
+                }
+            } else if (accountSelected ==2) {
+                System.out.println(customer.accounts);
+                customer.createAccount("Checking");
+            }
+
         }
 
     }
