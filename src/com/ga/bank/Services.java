@@ -22,9 +22,11 @@ public class Services {
             System.out.println("2. Checking account");
             int accountSelected = scanner.nextInt();
             if (accountSelected == 1) {
+                Account.readLastAccountId();
                 System.out.println(customer.accounts);
                 customer.createAccount("Saving");
             } else if (accountSelected == 2) {
+                Account.readLastAccountId();
                 System.out.println(customer.accounts);
                 customer.createAccount("Checking");
             }

@@ -66,8 +66,9 @@ public class FileManager {
         while(line!=null){
             String[] parts = line.split(",");
             if(parts[0].equals("ACCOUNT")){
-                Account account = new Account(parts[1]);
-                account.setBalance(Double.parseDouble(parts[2]));
+                Account account = new Account(parts[2]);
+                account.setAccountId(Integer.parseInt(parts[1].substring(2,6)));
+                account.setBalance(Double.parseDouble(parts[3]));
                 customer.accounts.add(account);
             }
             line = br.readLine();
@@ -105,6 +106,15 @@ public class FileManager {
             BufferedWriter bw = new BufferedWriter(fw);
 
             bw.write(transaction.toString());
+            bw.newLine();
+            bw.close();
+        }
+
+        public static void addAccount(Account account) throws IOException {
+            FileWriter fw = new FileWriter("accounts.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write(account.toString());
             bw.newLine();
             bw.close();
         }

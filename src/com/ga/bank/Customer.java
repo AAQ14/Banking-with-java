@@ -65,6 +65,7 @@ public class Customer extends User {
            Account newAccount = new Account(accountType);
            accounts.add(newAccount);
            FileManager.saveAccount(this, newAccount );
+           FileManager.addAccount(newAccount);
        }
     }
 

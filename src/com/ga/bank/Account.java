@@ -35,17 +35,26 @@ public class Account{
         this.accountType = accountType;
     }
 
+    public int getAccountId() {
+        return accountId;
+    }
 
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
 
     public String toString(){
         return "ACCOUNT" + ","+
-                getAccountType() + ","
+                String.format("A-%05d", getAccountId())+  ","
+                + getAccountType() + ","
                 + getBalance();
     }
 
     public static void readLastAccountId() throws IOException{
         FileReader fr = new FileReader("accounts.txt");
         BufferedReader br = new BufferedReader(fr);
+
+        System.out.println("read last account id is called");
 
         String line = br.readLine();
         String lastLine = null;
@@ -56,8 +65,10 @@ public class Account{
         }
 
         if(lastLine!=null){
-            String[] data = line.split(",");
-            num.set(Integer.parseInt(data[0]));
+            String[] data = lastLine.split(",");
+            int number =Integer.parseInt(data[1].substring(2));
+            System.out.println(number);
+            num.set(number);
         }
 
         br.close();
