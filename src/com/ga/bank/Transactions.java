@@ -5,17 +5,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Optional;
 
 public class Transactions {
 //    public User user;
-    public double balance;
-    public String from;
-    public String to;
-    public Date date;
-    public Time time;
+
     public static Customer customer;
     public static Scanner scanner = new Scanner(System.in);
     public static FileReader fr;
