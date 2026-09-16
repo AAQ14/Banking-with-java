@@ -68,7 +68,7 @@ public class FileManager {
             String[] parts = line.split(",");
             if(parts[0].equals("ACCOUNT")){
                 Account account = new Account(parts[2]);
-                account.setAccountId(Integer.parseInt(parts[1].substring(2,6)));
+                account.setAccountId(Integer.parseInt(parts[1].substring(2)));
                 account.setBalance(Double.parseDouble(parts[3]));
                 customer.accounts.add(account);
             }
@@ -87,7 +87,7 @@ public class FileManager {
     for(int i=0; i<lines.size(); i++){
         String line = lines.get(i);
         String[] parts = line.split(",");
-            if(parts[0].equals("ACCOUNT") && parts[1].equals(account.accountType)){
+            if(parts[0].equals("ACCOUNT") && account.accountId==(Integer.parseInt(parts[1].substring(2)))){
                     lines.set(i, account.toString());
         }
     }
