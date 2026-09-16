@@ -36,10 +36,23 @@ public class Transactions {
     }
 
     public static void withdrawal(Account account, double amount) throws IOException {
-        account.balance -= amount;
-        FileManager.updateAccounts(customer, account);
-        Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
-        FileManager.addTransaction(customer, trans);
+        double newBalance = account.balance-amount;
+        if(account.balance<0 && amount>100) {
+            System.out.println("Withdrawal is rejected! It is an overdraft");
+        } else if (newBalance<0){
+            account.balance -= amount;
+            account.setOverdraftCount(1+account.getOverdraftCount());
+            account.setOverdraftFees(35+ account.getOverdraftFees());
+            FileManager.updateAccounts(customer, account);
+            Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
+            FileManager.addTransaction(customer, trans);
+            } else{
+            account.balance -= amount;
+            FileManager.updateAccounts(customer, account);
+            Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
+            FileManager.addTransaction(customer, trans);
+        }
+
     }
 
     public static void transfer(Customer fromCustomer,Account fromAccount,  Customer toCustomer, Account toAccount, double amount) throws IOException {

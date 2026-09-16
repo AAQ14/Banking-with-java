@@ -9,12 +9,18 @@ public class Account{
     public String accountType;
     public int accountId;
     public static AtomicInteger num = new AtomicInteger(0);
+    private int overdraftCount;
+    private double overdraftFees;
+    private boolean active;
 
     public Account(String accountType) throws IOException {
         num.incrementAndGet();
         accountId =  num.intValue();
         balance = 0;
         this.accountType = accountType;
+        overdraftCount = 0;
+        overdraftFees = 0;
+        active = true;
     }
 
     public Account( int accountId, String accountType, double balance){
@@ -99,5 +105,29 @@ public class Account{
         br.close();
 
         return account;
+    }
+
+    public int getOverdraftCount() {
+        return overdraftCount;
+    }
+
+    public void setOverdraftCount(int overdraftCount) {
+        this.overdraftCount = overdraftCount;
+    }
+
+    public double getOverdraftFees() {
+        return overdraftFees;
+    }
+
+    public void setOverdraftFees(double overdraftFees) {
+        this.overdraftFees = overdraftFees;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
