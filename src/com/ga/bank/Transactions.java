@@ -46,7 +46,7 @@ public class Transactions {
         fromAccount.balance -=amount;
         FileManager.updateAccounts(fromCustomer, fromAccount);
         toAccount.balance += amount;
-        FileManager.updateAccounts(fromCustomer, toAccount);
+        FileManager.updateAccounts(toCustomer, toAccount);
         Transaction trans = new Transaction("Transfer", fromAccount.getBalance() ,amount,   String.format("A-%05d", fromAccount.getAccountId()), String.format("A-%05d", toAccount.getAccountId()), LocalDate.now(), LocalTime.now());
         FileManager.addTransaction(fromCustomer, trans);
         Transaction trans2 = new Transaction("Transfer", toAccount.getBalance() ,amount,   String.format("A-%05d", fromAccount.getAccountId()), String.format("A-%05d", toAccount.getAccountId()), LocalDate.now(), LocalTime.now());

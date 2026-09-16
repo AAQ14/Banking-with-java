@@ -78,13 +78,18 @@ public class Services {
 
             }
         } else if (service == 4){
+            Optional<Account> selectedAccount = Optional.empty();
             Transactions transactions = new Transactions(customer);
             //from which account you want to transfer
             System.out.println("from which account you want to transfer? ");
             System.out.println("1. Saving account");
             System.out.println("2. Checking account");
             int accountSelected = scanner.nextInt();
-            Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+            if (accountSelected == 1) {
+                 selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+            } else if  (accountSelected == 2){
+                 selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Checking")).findFirst();
+            }
             if (selectedAccount.isPresent()){
                 System.out.println("Enter account ID you want to transfer");
                 String accountId = scanner.next();

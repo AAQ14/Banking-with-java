@@ -136,11 +136,14 @@ public class FileManager {
                     FileManager. loadAccounts((Customer) user);
                     Optional<Account> account = user.accounts.stream().filter(a->a.accountId==id).findFirst();
                     if(account.isPresent()){
+                        br.close();
                         return user;
                     }
                 }
+                line = br.readLine();
             }
 
+            br.close();
             return user;
         }
 
