@@ -26,37 +26,6 @@ public class Transactions {
 
     }
 
-    public static void services(Customer user) throws IOException {
-        customer = user;
-        System.out.println("choose services");
-        System.out.println("1. create an account");
-        System.out.println("2. deposit");
-        System.out.println("3. withdraw");
-        System.out.println("4. transfer");
-        int service = scanner.nextInt();
-        if(service == 1){
-            System.out.println("Select the account you want to create: ");
-            System.out.println("1. Saving account");
-            System.out.println("2. Checking account");
-            int accountSelected = scanner.nextInt();
-            if(accountSelected ==1){
-                System.out.println(customer.accounts);
-                Optional<Account> account1= customer.accounts.stream().filter(account -> account.accountType.equals("Saving")).findFirst();
-
-                account1.ifPresentOrElse((account)->System.out.println("u already have " + account +""),()->{
-                    Account account = new Account("Saving");
-                    customer.accounts.add(account);
-                });
-
-            }else if(accountSelected==2){
-                Account account = new Account("Checking account");
-                customer.accounts.add(account);
-            }
-        }else if(service == 2){
-            System.out.println("from which account you want to deposit");
-//            System.out.println();
-        }
-    }
 
 
     public void deposit(Account account1, Account account2){

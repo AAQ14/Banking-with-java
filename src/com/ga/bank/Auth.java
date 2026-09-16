@@ -75,7 +75,7 @@ public class Auth {
                 if(data[6].equals("C")){
                     user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
                     System.out.println(username + " logged in");
-                    Transactions.services((Customer) user);
+                    Services.services((Customer) user);
                 } else if (data[6].equals("B")) {
                     user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6]);
                 }
