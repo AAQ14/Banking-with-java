@@ -54,4 +54,21 @@ public class FileManager {
         bw.close();
     }
 
+    public static void loadAccounts(Customer customer) throws IOException {
+        File file = new File(customer.getUserType() + "-" + customer.getUserName() +"-" + String.format("%05d", customer.getId())+".txt");
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String line = br.readLine();
+        while(line!=null){
+            String[] parts = line.split(",");
+            if(parts[0].equals("ACCOUNT")){
+                Account account = new Account(parts[1]);
+                account.setBalance(Double.parseDouble(parts[2]));
+                customer.accounts.add(account);
+            }
+            line = br.readLine();
+        }
+        br.close();
+    }
+
 }

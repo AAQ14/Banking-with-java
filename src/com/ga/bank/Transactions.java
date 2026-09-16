@@ -28,7 +28,7 @@ public class Transactions {
 
 
 
-    public void deposit(Account account1, Account account2){
+    public void deposit(Account account, double amount){
 
     }
 
