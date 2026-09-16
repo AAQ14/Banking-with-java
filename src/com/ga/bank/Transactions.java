@@ -35,8 +35,11 @@ public class Transactions {
             FileManager.addTransaction(customer, trans);
     }
 
-    public void withdrawal(Account account1, Account account2){
-
+    public static void withdrawal(Account account, double amount) throws IOException {
+        account.balance -= amount;
+        FileManager.updateAccounts(customer, account);
+        Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
+        FileManager.addTransaction(customer, trans);
     }
 
     public void transfer(User user1,  Account account1, User user2, Account account2){

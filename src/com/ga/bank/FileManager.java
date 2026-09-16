@@ -101,7 +101,7 @@ public class FileManager {
 
         public static void addTransaction(Customer customer, Transaction transaction) throws IOException {
             File file = new File(customer.getUserType() + "-" + customer.getUserName() +"-" + String.format("%05d", customer.getId())+ "-" + "transactions" +".txt");
-            FileWriter fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
 
             bw.write(transaction.toString());

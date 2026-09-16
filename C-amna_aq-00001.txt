@@ -1,1 +1,2 @@
-ACCOUNT,Saving,200.0
+ACCOUNT,Saving,78.0
+ACCOUNT,Checking,0.0
