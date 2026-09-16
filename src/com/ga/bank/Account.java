@@ -1,9 +1,7 @@
 package com.ga.bank;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Account{
@@ -17,6 +15,12 @@ public class Account{
         accountId =  num.intValue();
         balance = 0;
         this.accountType = accountType;
+    }
+
+    public Account( int accountId, String accountType, double balance){
+         this.accountId = accountId;
+         this.accountType = accountType;
+         this.balance = balance;
     }
 
     public double getBalance() {
@@ -72,5 +76,28 @@ public class Account{
         }
 
         br.close();
+    }
+
+    public static Account findAccount(String accountId) throws IOException {
+        Account account = null;
+        FileReader fr = new FileReader("accounts.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        String line = br.readLine();
+
+        while(line!=null){
+            String[] parts = line.split(",");
+            int id =Integer.parseInt(parts[1].substring(2));
+            if(parts[1].equals(accountId)){
+                    account = new Account(id, parts[2], Double.parseDouble(parts[3]));
+                    br.close();
+                    return account;
+            }
+
+            line = br.readLine();
+        }
+        br.close();
+
+        return account;
     }
 }

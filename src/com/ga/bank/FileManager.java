@@ -5,6 +5,7 @@ import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class FileManager {
 
@@ -117,6 +118,30 @@ public class FileManager {
             bw.write(account.toString());
             bw.newLine();
             bw.close();
+        }
+
+        public static Customer findAccountOwner(String accountId) throws IOException {
+            Customer user = null;
+            FileReader fr = new FileReader("data.txt");
+            BufferedReader br = new BufferedReader(fr);
+
+            int id =Integer.parseInt(accountId.substring(2));
+            String line = br.readLine();
+
+            while(line!=null){
+                String parts[] = line.split(",");
+                if(parts[6].equals("C")){
+                    user = new Customer(parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]);
+                    user.id = Integer.parseInt(parts[0]);
+                    FileManager. loadAccounts((Customer) user);
+                    Optional<Account> account = user.accounts.stream().filter(a->a.accountId==id).findFirst();
+                    if(account.isPresent()){
+                        return user;
+                    }
+                }
+            }
+
+            return user;
         }
 
 }

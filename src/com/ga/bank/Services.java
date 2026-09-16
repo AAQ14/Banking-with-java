@@ -80,7 +80,18 @@ public class Services {
         } else if (service == 4){
             Transactions transactions = new Transactions(customer);
             //from which account you want to transfer
-            System.out.println("from which account u want to transfer");
+            System.out.println("from which account you want to transfer? ");
+            System.out.println("1. Saving account");
+            System.out.println("2. Checking account");
+            int accountSelected = scanner.nextInt();
+            Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+            if (selectedAccount.isPresent()){
+                System.out.println("Enter account ID you want to transfer");
+                String accountId = scanner.next();
+                System.out.println("How much do you wanna transfer?");
+                double amount = scanner.nextDouble();
+                Transactions.transfer(customer,selectedAccount.get(),FileManager.findAccountOwner(accountId) , Account.findAccount(accountId), amount);
+            }
             //how much do u want to transfer
 
             //to whom account id do u want transfer

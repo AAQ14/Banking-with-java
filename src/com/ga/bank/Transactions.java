@@ -42,7 +42,7 @@ public class Transactions {
         FileManager.addTransaction(customer, trans);
     }
 
-    public void transfer(Customer fromCustomer,Account fromAccount,  Customer toCustomer, Account toAccount, double amount) throws IOException {
+    public static void transfer(Customer fromCustomer,Account fromAccount,  Customer toCustomer, Account toAccount, double amount) throws IOException {
         fromAccount.balance -=amount;
         FileManager.updateAccounts(fromCustomer, fromAccount);
         toAccount.balance += amount;
