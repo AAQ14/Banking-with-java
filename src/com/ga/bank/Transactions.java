@@ -42,8 +42,15 @@ public class Transactions {
         FileManager.addTransaction(customer, trans);
     }
 
-    public void transfer(User user1,  Account account1, User user2, Account account2){
-
+    public void transfer(Customer fromCustomer,Account fromAccount,  Customer toCustomer, Account toAccount, double amount) throws IOException {
+        fromAccount.balance -=amount;
+        FileManager.updateAccounts(fromCustomer, fromAccount);
+        toAccount.balance += amount;
+        FileManager.updateAccounts(fromCustomer, toAccount);
+        Transaction trans = new Transaction("Transfer", fromAccount.getBalance() ,amount,   String.format("A-%05d", fromAccount.getAccountId()), String.format("A-%05d", toAccount.getAccountId()), LocalDate.now(), LocalTime.now());
+        FileManager.addTransaction(fromCustomer, trans);
+        Transaction trans2 = new Transaction("Transfer", toAccount.getBalance() ,amount,   String.format("A-%05d", fromAccount.getAccountId()), String.format("A-%05d", toAccount.getAccountId()), LocalDate.now(), LocalTime.now());
+        FileManager.addTransaction(toCustomer, trans2);
     }
 
 }

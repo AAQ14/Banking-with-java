@@ -74,6 +74,7 @@ public class Auth {
                 //find the user with the same username and assign it to the user
                 if(data[6].equals("C")){
                     user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
+                    user.id = Integer.parseInt(data[0]);
                     FileManager.loadAccounts((Customer) user);
                     System.out.println(username + " logged in");
                     Services.services((Customer) user);

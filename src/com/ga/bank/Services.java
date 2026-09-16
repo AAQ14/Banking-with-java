@@ -77,7 +77,13 @@ public class Services {
                 }
 
             }
+        } else if (service == 4){
+            Transactions transactions = new Transactions(customer);
+            //from which account you want to transfer
+            System.out.println("from which account u want to transfer");
+            //how much do u want to transfer
 
+            //to whom account id do u want transfer
         }
     }
 
