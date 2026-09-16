@@ -99,4 +99,14 @@ public class FileManager {
         bw.close();
 }
 
+        public static void addTransaction(Customer customer, Transaction transaction) throws IOException {
+            File file = new File(customer.getUserType() + "-" + customer.getUserName() +"-" + String.format("%05d", customer.getId())+ "-" + "transactions" +".txt");
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write(transaction.toString());
+            bw.newLine();
+            bw.close();
+        }
+
 }

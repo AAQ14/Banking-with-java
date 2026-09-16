@@ -31,6 +31,8 @@ public class Transactions {
     public static void deposit(Account account, double amount) throws IOException {
             account.balance += amount;
             FileManager.updateAccounts(customer, account);
+            Transaction trans = new Transaction("DEPOSIT", account.getBalance() ,amount, "-", (String.format("%05d", customer.getId()) + ":"+account.accountType), LocalDate.now(), LocalTime.now());
+            FileManager.addTransaction(customer, trans);
     }
 
     public void withdrawal(Account account1, Account account2){
