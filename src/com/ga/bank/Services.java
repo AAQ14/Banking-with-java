@@ -125,10 +125,20 @@ public class Services {
             System.out.println("1. Filter today transactions");
             System.out.println("2. Filter yesterday transactions");
             int choice= scanner.nextInt();
+            while(choice!=1 && choice!=2){
+                System.out.println("Enter a valid choice:");
+                choice= scanner.nextInt();
+            }
             if(choice==1){
-                FileManager.filterToday(customer);
-            }else if(choice==2){
-                FileManager.filterToday(customer);
+                for(String trans : FileManager.filterToday(customer)){
+                    System.out.println(trans);
+                    System.out.println("-------------------------------------------------------------");
+                }
+            }else {
+                for(String trans : FileManager.filterYesterday(customer)){
+                    System.out.println(trans);
+                    System.out.println("-------------------------------------------------------------");
+                }
             }
         }
     }
