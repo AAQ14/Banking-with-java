@@ -121,7 +121,15 @@ public class Services {
         } else if(service == 6) {
             FileManager.displayTransactions(customer);
         } else if(service ==7 ){
-
+            System.out.println("which filter you want to apply for your transactions: ");
+            System.out.println("1. Filter today transactions");
+            System.out.println("2. Filter yesterday transactions");
+            int choice= scanner.nextInt();
+            if(choice==1){
+                FileManager.filterToday(customer);
+            }else if(choice==2){
+                FileManager.filterToday(customer);
+            }
         }
     }
 
