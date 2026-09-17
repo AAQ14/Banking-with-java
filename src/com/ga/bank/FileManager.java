@@ -173,4 +173,21 @@ public class FileManager {
 
         }
 
+        public static List<String> readTransactions(Customer customer) throws IOException {
+            String fileName = customer.userType + "-" + customer.userName + "-" +String.format("%05d", customer.getId()) + "-" + "transactions"+ ".txt";
+
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+
+            List<String> transactionsList = br.lines().toList();
+
+            br.close();
+            return transactionsList;
+        }
+
+//        public static List<String> filterToday(Customer customer) throws IOException {
+//            List<String>  list = readTransactions(customer);
+//
+//        }
+
 }
