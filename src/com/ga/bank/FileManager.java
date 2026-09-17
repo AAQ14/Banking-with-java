@@ -236,4 +236,29 @@ public class FileManager {
 //        return filteredList;
 //    }
 
+
+        public static void updateUser(User user) throws IOException{
+            File fileName = new File("data.txt");
+
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+            List<String> lines = br.lines().collect(Collectors.toList());
+            br.close();
+
+            for(int i=0; i<lines.size(); i++){
+                String line = lines.get(i);
+                String[] parts = line.split(",");
+                if(Integer.parseInt(parts[0]) == user.getId()){
+                    lines.set(i, user.toString());
+                }
+            }
+
+            FileWriter fw = new FileWriter("data.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (String line: lines){
+                bw.write(line);
+                bw.newLine();
+            }
+            bw.close();
+        }
 }
