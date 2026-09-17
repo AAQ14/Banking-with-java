@@ -15,6 +15,7 @@ public class Services {
         System.out.println("2. deposit");
         System.out.println("3. withdraw");
         System.out.println("4. transfer");
+        System.out.println("5. Reactivate account");
         int service = scanner.nextInt();
         if (service == 1) {
             System.out.println("Select the account you want to create: ");
@@ -97,9 +98,24 @@ public class Services {
                 double amount = scanner.nextDouble();
                 Transactions.transfer(customer,selectedAccount.get(),FileManager.findAccountOwner(accountId) , Account.findAccount(accountId), amount);
             }
-            //how much do u want to transfer
+        } else if(service == 5){
+            Optional<Account> selectedAccount = Optional.empty();
+            System.out.println("which account u want to reactivate? ");
+            System.out.println("1. Saving account");
+            System.out.println("2. Checking account");
+            int accountSelected = scanner.nextInt();
 
-            //to whom account id do u want transfer
+            if (accountSelected == 1) {
+                selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+            } else if  (accountSelected == 2){
+                selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Checking")).findFirst();
+            }
+
+            if(selectedAccount.isPresent()){
+                selectedAccount.get().reactivateAccount(customer);
+            }else{
+                System.out.println("Account is not found. ");
+            }
         }
     }
 

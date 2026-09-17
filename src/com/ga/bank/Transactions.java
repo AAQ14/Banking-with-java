@@ -36,26 +36,33 @@ public class Transactions {
     }
 
     public static void withdrawal(Account account, double amount) throws IOException {
-        double newBalance = account.balance-amount;
-        if(account.balance<0 && amount>100) {
-            System.out.println("Withdrawal is rejected! It is an overdraft");
-        } else if (newBalance<0){
-            account.balance -= amount;
-            account.setOverdraftCount(1+account.getOverdraftCount());
-            account.setOverdraftFees(35+ account.getOverdraftFees());
-            account.balance -=35;
-            if(account.getOverdraftCount() >=2){
-                account.setActive(false);
+        if(account.isActive()){
+            if(amount<=0){
+                System.out.println("Invalid withdrawal amount");
+                return;
+            }
+            double newBalance = account.balance-amount;
+            if(account.balance<0 && amount>100) {
+                System.out.println("Withdrawal is rejected! It is an overdraft");
+            } else if (newBalance<0){
+                account.balance -= amount;
+                account.setOverdraftCount(1+account.getOverdraftCount());
+                account.setOverdraftFees(35+ account.getOverdraftFees());
+                account.balance -=35;
+                if(account.getOverdraftCount() >=2){
+                    account.setActive(false);
+                }
+                    FileManager.updateAccounts(customer, account);
+                    Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
+                    FileManager.addTransaction(customer, trans);
             } else{
+                account.balance -= amount;
                 FileManager.updateAccounts(customer, account);
                 Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
                 FileManager.addTransaction(customer, trans);
             }
-            } else{
-            account.balance -= amount;
-            FileManager.updateAccounts(customer, account);
-            Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
-            FileManager.addTransaction(customer, trans);
+        } else{
+            System.out.println("Withdrawal is rejected, the account is inactive.");
         }
 
     }

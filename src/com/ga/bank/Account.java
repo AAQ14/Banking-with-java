@@ -133,4 +133,15 @@ public class Account{
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public void reactivateAccount(Customer customer) throws IOException{
+        if(!active && balance >=0){
+            setActive(true);
+            FileManager.updateAccounts(customer, this);
+            System.out.println("Account reactivated successfully.");
+        } else {
+            System.out.println("Account cannot be reactivated yet.");
+        }
+    }
+
 }
