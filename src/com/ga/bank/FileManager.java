@@ -150,4 +150,27 @@ public class FileManager {
             return user;
         }
 
+        public static void displayTransactions(Customer customer) throws IOException {
+            String fileName = customer.userType + "-" + customer.userName + "-" +String.format("%05d", customer.getId()) + "-" + "transactions"+ ".txt";
+
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+
+            String line = br.readLine();
+            while(line!=null){
+                System.out.println("-------------------------------------");
+                String[] parts = line.split(",");
+                System.out.println("Date: " + parts[0]);
+                System.out.println("Time: " + parts[1]);
+                System.out.println("Type: " + parts[2]);
+                System.out.println("From: " + parts[3]);
+                System.out.println("To: " + parts[4]);
+                System.out.println("Amount: " + parts[5]);
+                System.out.println("Balance: " + parts[6]);
+                System.out.println("-------------------------------------");
+                line = br.readLine();
+            }
+
+        }
+
 }

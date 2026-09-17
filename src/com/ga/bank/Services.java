@@ -16,6 +16,7 @@ public class Services {
         System.out.println("3. withdraw");
         System.out.println("4. transfer");
         System.out.println("5. Reactivate account");
+        System.out.println("6. View transaction history");
         int service = scanner.nextInt();
         if (service == 1) {
             System.out.println("Select the account you want to create: ");
@@ -116,6 +117,8 @@ public class Services {
             }else{
                 System.out.println("Account is not found. ");
             }
+        } else if(service == 6) {
+            FileManager.displayTransactions(customer);
         }
     }
 

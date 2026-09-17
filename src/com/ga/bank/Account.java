@@ -135,12 +135,14 @@ public class Account{
     }
 
     public void reactivateAccount(Customer customer) throws IOException{
-        if(!active && balance >=0){
+        if (active) {
+            System.out.println("Account is already active.");
+        } else if (balance < 0) {
+            System.out.println("Account cannot be reactivated yet. u must solve the balance first");
+        } else {
             setActive(true);
             FileManager.updateAccounts(customer, this);
             System.out.println("Account reactivated successfully.");
-        } else {
-            System.out.println("Account cannot be reactivated yet.");
         }
     }
 
