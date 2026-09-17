@@ -2,6 +2,7 @@ package com.ga.bank;
 
 import java.io.*;
 import java.nio.channels.FileLock;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -185,9 +186,16 @@ public class FileManager {
             return transactionsList;
         }
 
-//        public static List<String> filterToday(Customer customer) throws IOException {
-//            List<String>  list = readTransactions(customer);
-//
-//        }
+        public static List<String> filterToday(Customer customer) throws IOException {
+            List<String>  list = readTransactions(customer);
+
+            List<String>  filteredList = list.stream().filter( trans->{
+                String[] parts = trans.split(",");
+                LocalDate transactionDate = LocalDate.parse(parts[0]);
+                return transactionDate.isEqual(LocalDate.now());
+            }).toList();
+
+           return filteredList;
+        }
 
 }
