@@ -77,7 +77,9 @@ public abstract class User {
                 getUserName() + "," +
                 getEmail() + "," +
                 getPassword() + "," +
-                getUserType();
+                getUserType() + "," +
+                getFailedAttempts() + "," +
+                (getLockedUntil() == null ? "NONE" : getLockedUntil());
     }
 
 

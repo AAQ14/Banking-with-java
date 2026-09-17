@@ -72,6 +72,12 @@ public class Auth {
                 if(data[6].equals("C")){
                     user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
                     user.id = Integer.parseInt(data[0]);
+                    user.setFailedAttempts(Integer.parseInt(data[7]));
+                    if(data[8].equals("NONE")){
+                        user.setLockedUntil(null);
+                    } else{
+                        user.setLockedUntil(LocalDateTime.parse(data[8]));
+                    }
                     //check if it's locked
                     if(user.getLockedUntil() != null && LocalDateTime.now().isBefore(user.getLockedUntil())){
                         System.out.println("Account is locked, try again later");
@@ -104,6 +110,12 @@ public class Auth {
                 } else if (data[6].equals("B")) {
                     user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6]);
                     user.id = Integer.parseInt(data[0]);
+                    user.setFailedAttempts(Integer.parseInt(data[7]));
+                    if(data[8].equals("NONE")){
+                        user.setLockedUntil(null);
+                    } else{
+                        user.setLockedUntil(LocalDateTime.parse(data[8]));
+                    }
 
                     if(Objects.equals(data[3], username)){
                         //check if it's locked
