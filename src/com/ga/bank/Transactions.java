@@ -43,9 +43,14 @@ public class Transactions {
             account.balance -= amount;
             account.setOverdraftCount(1+account.getOverdraftCount());
             account.setOverdraftFees(35+ account.getOverdraftFees());
-            FileManager.updateAccounts(customer, account);
-            Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
-            FileManager.addTransaction(customer, trans);
+            account.balance -=35;
+            if(account.getOverdraftCount() >=2){
+                account.setActive(false);
+            } else{
+                FileManager.updateAccounts(customer, account);
+                Transaction trans = new Transaction("WITHDRAWAL", account.getBalance() ,amount, (String.format("%05d", customer.getId()) + ":"+account.accountType), "-", LocalDate.now(), LocalTime.now());
+                FileManager.addTransaction(customer, trans);
+            }
             } else{
             account.balance -= amount;
             FileManager.updateAccounts(customer, account);

@@ -57,7 +57,10 @@ public class Account{
         return "ACCOUNT" + ","+
                 String.format("A-%05d", getAccountId())+  ","
                 + getAccountType() + ","
-                + getBalance();
+                + getBalance()+","
+                + getOverdraftCount() + ","
+                + getOverdraftFees() + ","
+                + isActive();
     }
 
     public static void readLastAccountId() throws IOException{

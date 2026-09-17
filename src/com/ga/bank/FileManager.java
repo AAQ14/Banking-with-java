@@ -70,6 +70,9 @@ public class FileManager {
                 Account account = new Account(parts[2]);
                 account.setAccountId(Integer.parseInt(parts[1].substring(2)));
                 account.setBalance(Double.parseDouble(parts[3]));
+                account.setOverdraftCount(Integer.parseInt(parts[4]));
+                account.setOverdraftFees(Double.parseDouble(parts[5]));
+                account.setActive(Boolean.parseBoolean(parts[6]));
                 customer.accounts.add(account);
             }
             line = br.readLine();
