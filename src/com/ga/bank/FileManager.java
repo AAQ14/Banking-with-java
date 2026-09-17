@@ -211,29 +211,29 @@ public class FileManager {
          }
 
 
-        public static List<String> filterLastWeek(Customer customer) throws IOException {
-        List<String>  list = readTransactions(customer);
-
-        List<String>  filteredList = list.stream().filter( trans->{
-            String[] parts = trans.split(",");
-            LocalDate transactionDate = LocalDate.parse(parts[0]);
-            return transactionDate.isEqual(LocalDate.now().minusWeeks(1));
-        }).toList();
-
-        return filteredList;
-        }
-
-
-    public static List<String> filterLastMonth(Customer customer) throws IOException {
-        List<String>  list = readTransactions(customer);
-
-        List<String>  filteredList = list.stream().filter( trans->{
-            String[] parts = trans.split(",");
-            LocalDate transactionDate = LocalDate.parse(parts[0]);
-            return transactionDate.isEqual(LocalDate.now().minusMonths(1));
-        }).toList();
-
-        return filteredList;
-    }
+//        public static List<String> filterLastWeek(Customer customer) throws IOException {
+//        List<String>  list = readTransactions(customer);
+//
+//        List<String>  filteredList = list.stream().filter( trans->{
+//            String[] parts = trans.split(",");
+//            LocalDate transactionDate = LocalDate.parse(parts[0]);
+//            return transactionDate.isEqual(LocalDate.now().minusWeeks(1));
+//        }).toList();
+//
+//        return filteredList;
+//        }
+//
+//
+//    public static List<String> filterLastMonth(Customer customer) throws IOException {
+//        List<String>  list = readTransactions(customer);
+//
+//        List<String>  filteredList = list.stream().filter( trans->{
+//            String[] parts = trans.split(",");
+//            LocalDate transactionDate = LocalDate.parse(parts[0]);
+//            return transactionDate.isEqual(LocalDate.now().minusMonths(1));
+//        }).toList();
+//
+//        return filteredList;
+//    }
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
@@ -19,6 +20,8 @@ public abstract class User {
     public String password;
     public String userType;
     public static AtomicInteger num = new AtomicInteger(0);;
+    public int failedAttempts = 0;
+    public LocalDateTime lockedUntil = null;
 
 //    protected abstract User();
 
@@ -47,6 +50,22 @@ public abstract class User {
     public abstract String getPassword();
 
     public abstract String getUserType();
+
+    public int getFailedAttempts() {
+        return failedAttempts;
+    }
+
+    public void setFailedAttempts(int failedAttempts) {
+        this.failedAttempts = failedAttempts;
+    }
+
+    public LocalDateTime getLockedUntil() {
+        return lockedUntil;
+    }
+
+    public void setLockedUntil(LocalDateTime lockedUntil) {
+        this.lockedUntil = lockedUntil;
+    }
 
 
     @Override
