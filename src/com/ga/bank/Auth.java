@@ -73,6 +73,7 @@ public class Auth {
                     user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
                     user.id = Integer.parseInt(data[0]);
                     user.setFailedAttempts(Integer.parseInt(data[7]));
+
                     if(data[8].equals("NONE")){
                         user.setLockedUntil(null);
                     } else{
@@ -85,13 +86,19 @@ public class Auth {
                         return null;
                     }
 
+                    if(user.getLockedUntil() != null && !LocalDateTime.now().isBefore(user.getLockedUntil())){
+                        user.setFailedAttempts(0);
+                        user.setLockedUntil(null);
+                    }
+
                     //check password
                     while(!Objects.equals(data[5], cryptPass)){
                         user.setFailedAttempts(user.getFailedAttempts()+1);
                         if(user.getFailedAttempts() >=3){
                             user.setLockedUntil(LocalDateTime.now().plusMinutes(1));
-                            System.out.println("this account is locked for one min, try again later");
                             br.close();
+                            FileManager.updateUser(user);
+                            System.out.println("this account is locked for one min, try again later");
                             return null;
                         }
                         System.out.println("ur password is wrong, try again!");
@@ -103,10 +110,16 @@ public class Auth {
                     //successful login
                     user.setFailedAttempts(0);
                     user.setLockedUntil(null);
+                    br.close();
+
+                    FileManager.updateUser(user);
+
 
                     FileManager.loadAccounts((Customer) user);
                     System.out.println(username + " logged in");
                     Services.services((Customer) user);
+
+                    return user;
                 } else if (data[6].equals("B")) {
                     user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6]);
                     user.id = Integer.parseInt(data[0]);
@@ -117,7 +130,6 @@ public class Auth {
                         user.setLockedUntil(LocalDateTime.parse(data[8]));
                     }
 
-                    if(Objects.equals(data[3], username)){
                         //check if it's locked
                         if(user.getLockedUntil() != null && LocalDateTime.now().isBefore(user.getLockedUntil())){
                             System.out.println("Account is locked, try again later");
@@ -125,11 +137,21 @@ public class Auth {
                             return null;
                         }
 
+                        if(user.getLockedUntil() != null && !LocalDateTime.now().isBefore(user.getLockedUntil())){
+
+                             user.setFailedAttempts(0);
+                             user.setLockedUntil(null);
+                          }
+
                         //check password
                         while(!Objects.equals(data[5], cryptPass)){
                             user.setFailedAttempts(user.getFailedAttempts()+1);
+
                             if(user.getFailedAttempts() >=3){
                                 user.setLockedUntil(LocalDateTime.now().plusMinutes(1));
+                                br.close();
+
+                                FileManager.updateUser(user);
                                 System.out.println("this account is locked for one min, try again later");
                                 br.close();
                                 return null;
@@ -144,33 +166,22 @@ public class Auth {
                         //successful login
                         user.setFailedAttempts(0);
                         user.setLockedUntil(null);
+                        br.close();
 
-                        System.out.println(username + "logged in");
-                    }
+                    FileManager.updateUser(user);
+
+                    System.out.println(username + "logged in");
+                    return user;
                 }
             }
-
-
-//            if(Objects.equals(data[3], username) && Objects.equals(data[5], cryptPass)){
-//                //find the user with the same username and assign it to the user
-//                if(data[6].equals("C")){
-//                    user = new Customer(data[1], data[2], data[3], data[4], data[5], data[6]);
-//                    user.id = Integer.parseInt(data[0]);
-//                    FileManager.loadAccounts((Customer) user);
-//                    System.out.println(username + " logged in");
-//                    Services.services((Customer) user);
-//                } else if (data[6].equals("B")) {
-//                    user = new Banker(data[1], data[2], data[3], data[4], data[5], data[6]);
-//                }
-//                System.out.println(username + " logged in");
-////                services(user);
-//            }
-//            line = br.readLine();
+            line = br.readLine();
         }
-        if(user==null)
+        br.close();
+        if(user==null){
             System.out.println("login failed");
+            return null;
+        }
 
-        System.out.println("this is the user details that signed"+user.toString());
         return user;
     }
 
