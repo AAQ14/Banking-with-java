@@ -1,4 +1,4 @@
-package com.ga.bank;
+package com.ga.bank.cards;
 
 public abstract class DebitCard {
     //Debit card fields
