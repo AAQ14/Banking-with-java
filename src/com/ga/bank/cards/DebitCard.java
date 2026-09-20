@@ -27,4 +27,25 @@ public abstract class DebitCard {
 
     public abstract double getDepositLimitPerDay();
 
+    //Mutator methods
+
+    public void setDepositLimitPerDay(double depositLimitPerDay) {
+        this.depositLimitPerDay = depositLimitPerDay;
+    }
+
+    public void setDepositLimit(double depositLimit) {
+        this.depositLimit = depositLimit;
+    }
+
+    public void setTransferLimitPerDay(double transferLimitPerDay) {
+        this.transferLimitPerDay = transferLimitPerDay;
+    }
+
+    public void setTransferLimit(double transferLimit) {
+        this.transferLimit = transferLimit;
+    }
+
+    public void setWithdrawLimit(double withdrawLimit) {
+        this.withdrawLimit = withdrawLimit;
+    }
 }
