@@ -3,8 +3,8 @@ package com.ga.bank.cards;
 public class MastercardPlatinum extends DebitCard{
 
     //Mastercard platinum constructor
-    public MastercardPlatinum(double depositLimitPerDay, double depositLimit, double transferLimitPerDay, double transferLimit, double withdrawLimit) {
-        super(depositLimitPerDay, depositLimit, transferLimitPerDay, transferLimit, withdrawLimit);
+    public MastercardPlatinum() {
+        super(20000, 40000, 80000, 100000, 200000);
     }
 
     //Override accessor methods
@@ -19,8 +19,8 @@ public class MastercardPlatinum extends DebitCard{
     }
 
     @Override
-    public double getTransferLimitPerDay() {
-        return this.transferLimitPerDay;
+    public double getTransferLimitOwnAccount() {
+        return this.transferLimitOwnAccount;
     }
 
     @Override
@@ -29,33 +29,8 @@ public class MastercardPlatinum extends DebitCard{
     }
 
     @Override
-    public double getDepositLimitPerDay() {
-        return this.depositLimitPerDay;
+    public double getDepositLimitOwnAccount() {
+        return this.depositLimitOwnAccount;
     }
 
-    //Override mutator methods
-    @Override
-    public void setDepositLimitPerDay(double depositLimitPerDay) {
-        super.setDepositLimitPerDay(depositLimitPerDay);
-    }
-
-    @Override
-    public void setDepositLimit(double depositLimit) {
-        super.setDepositLimit(depositLimit);
-    }
-
-    @Override
-    public void setTransferLimitPerDay(double transferLimitPerDay) {
-        super.setTransferLimitPerDay(transferLimitPerDay);
-    }
-
-    @Override
-    public void setTransferLimit(double transferLimit) {
-        super.setTransferLimit(transferLimit);
-    }
-
-    @Override
-    public void setWithdrawLimit(double withdrawLimit) {
-        super.setWithdrawLimit(withdrawLimit);
-    }
 }

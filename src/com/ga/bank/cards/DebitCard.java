@@ -4,16 +4,16 @@ public abstract class DebitCard {
     //Debit card fields
     public double withdrawLimit;
     public double transferLimit;
-    public double transferLimitPerDay;
+    public double transferLimitOwnAccount;
     public double depositLimit;
-    public double depositLimitPerDay;
+    public double depositLimitOwnAccount;
 
-    public DebitCard(double depositLimitPerDay, double depositLimit, double transferLimitPerDay, double transferLimit, double withdrawLimit) {
-        this.depositLimitPerDay = depositLimitPerDay;
-        this.depositLimit = depositLimit;
-        this.transferLimitPerDay = transferLimitPerDay;
-        this.transferLimit = transferLimit;
+    public DebitCard(double withdrawLimit, double transferLimit, double transferLimitOwnAccount,  double depositLimit, double depositLimitOwnAccount) {
         this.withdrawLimit = withdrawLimit;
+        this.transferLimit = transferLimit;
+        this.transferLimitOwnAccount = transferLimitOwnAccount;
+        this.depositLimit = depositLimit;
+        this.depositLimitOwnAccount = depositLimitOwnAccount;
     }
 
     //Accessor methods
@@ -21,24 +21,24 @@ public abstract class DebitCard {
 
     public abstract double getTransferLimit();
 
-    public abstract double getTransferLimitPerDay();
+    public abstract double getTransferLimitOwnAccount();
 
     public abstract double getDepositLimit();
 
-    public abstract double getDepositLimitPerDay();
+    public abstract double getDepositLimitOwnAccount();
 
     //Mutator methods
 
-    public void setDepositLimitPerDay(double depositLimitPerDay) {
-        this.depositLimitPerDay = depositLimitPerDay;
+    public void setDepositLimitOwnAccount(double depositLimitOwnAccount) {
+        this.depositLimitOwnAccount = depositLimitOwnAccount;
     }
 
     public void setDepositLimit(double depositLimit) {
         this.depositLimit = depositLimit;
     }
 
-    public void setTransferLimitPerDay(double transferLimitPerDay) {
-        this.transferLimitPerDay = transferLimitPerDay;
+    public void setTransferLimitOwnAccount(double transferLimitOwnAccount) {
+        this.transferLimitOwnAccount = transferLimitOwnAccount;
     }
 
     public void setTransferLimit(double transferLimit) {
