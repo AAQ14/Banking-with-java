@@ -78,7 +78,6 @@ public class Services {
                     double amount = readAmount();
                     Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
                     if (selectedAccount.isPresent()) {
-                        System.out.println(customer.accounts);
                         transactions.deposit(selectedAccount.get(), amount);
                     }
                 } else if (accountSelected == 2) {
@@ -86,7 +85,6 @@ public class Services {
                     double amount = readAmount();
                     Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Checking")).findFirst();
                     if (selectedAccount.isPresent()) {
-                        System.out.println(customer.accounts);
                         transactions.deposit(selectedAccount.get(), amount);
                     }
                 }
@@ -101,7 +99,6 @@ public class Services {
                     double amount = readAmount();
                     Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
                     if (selectedAccount.isPresent()) {
-                        System.out.println(customer.accounts);
                         transactions.withdrawal(selectedAccount.get(), amount);
                     }
                 } else if (accountSelected == 2) {
@@ -109,7 +106,6 @@ public class Services {
                     double amount = readAmount();
                     Optional<Account> selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Checking")).findFirst();
                     if (selectedAccount.isPresent()) {
-                        System.out.println(customer.accounts);
                         transactions.withdrawal(selectedAccount.get(), amount);
                     }
 
