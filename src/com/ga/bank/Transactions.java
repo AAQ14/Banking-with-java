@@ -29,6 +29,13 @@ public class Transactions {
     }
 
     public static void deposit(Account account, double amount) throws IOException {
+        if(amount <=0){
+            System.out.println("invalid deposit amount");
+            return;
+        }
+        if(amount > account.getCard().getDepositLimit()){
+            System.out.println("this amount is more than your deposit limit: " + account.getCard().getDepositLimit());
+        }
             account.balance += amount;
             FileManager.updateAccounts(customer, account);
             Transaction trans = new Transaction("DEPOSIT", account.getBalance() ,amount, "-", (String.format("%05d", customer.getId()) + ":"+account.accountType), LocalDate.now(), LocalTime.now());
@@ -40,6 +47,9 @@ public class Transactions {
             if(amount<=0){
                 System.out.println("Invalid withdrawal amount");
                 return;
+            }
+            if(amount >account.getCard().getWithdrawLimit()){
+                System.out.println("this amount is more than the withdraw limit of " + account.getCard().getWithdrawLimit());
             }
             double newBalance = account.balance-amount;
             if(account.balance<0 && amount>100) {
@@ -68,6 +78,28 @@ public class Transactions {
     }
 
     public static void transfer(Customer fromCustomer,Account fromAccount,  Customer toCustomer, Account toAccount, double amount) throws IOException {
+        if(toCustomer==null || toAccount==null){
+            System.out.println("Receiver account not found");
+            return;
+        }
+        if(amount<=0){
+            System.out.println("Invalid amount");
+            return;
+        }
+        boolean ownAccount ;
+        ownAccount = (fromCustomer.getId() == toCustomer.getId());
+
+        if(ownAccount){
+            if(amount > fromAccount.getCard().getTransferLimitOwnAccount()){
+                System.out.println("the amount is more than the limit of: " +  fromAccount.getCard().getTransferLimitOwnAccount());
+                return;
+            }
+        }else{
+            if(amount > fromAccount.getCard().getTransferLimit()){
+                System.out.println("this amount is more than your transfer limit of: " + fromAccount.getCard().getTransferLimit());
+                return;
+            }
+        }
         fromAccount.balance -=amount;
         System.out.println("FROM ID: " + fromAccount.getAccountId());
         System.out.println("FROM BALANCE: " + fromAccount.getBalance());
