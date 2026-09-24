@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.Optional;
 
-public class Transactions {
+public class Transactions{
 
     public static Customer customer;
     public static Scanner scanner = new Scanner(System.in);

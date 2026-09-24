@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Account{
+public class Account implements IAccount{
     public double balance;
     public String accountType;
     public int accountId;
