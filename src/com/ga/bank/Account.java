@@ -1,5 +1,10 @@
 package com.ga.bank;
 
+import com.ga.bank.cards.DebitCard;
+import com.ga.bank.cards.Mastercard;
+import com.ga.bank.cards.MastercardPlatinum;
+import com.ga.bank.cards.MastercardTitanium;
+
 import javax.swing.*;
 import java.io.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,8 +17,9 @@ public class Account{
     private int overdraftCount;
     private double overdraftFees;
     private boolean active;
+    private  DebitCard card;
 
-    public Account(String accountType) throws IOException {
+    public Account(String accountType, DebitCard card) throws IOException {
         num.incrementAndGet();
         accountId =  num.intValue();
         balance = 0;
@@ -21,12 +27,28 @@ public class Account{
         overdraftCount = 0;
         overdraftFees = 0;
         active = true;
+        setCard(card);
     }
 
-    public Account( int accountId, String accountType, double balance){
+    public Account( int accountId, String accountType, double balance, int overdraftCount,
+                    double overdraftFees, boolean active, String cardName){
          this.accountId = accountId;
          this.accountType = accountType;
          this.balance = balance;
+        this.overdraftCount = overdraftCount;
+        this.overdraftFees = overdraftFees;
+        this.active = active;
+        if(cardName.equals("Platinum")){
+            this.card = new MastercardPlatinum();
+        } else if(cardName.equals("Titanium")){
+            this.card = new MastercardTitanium();
+        } else {
+            this.card = new Mastercard();
+        }
+    }
+
+    public Account(String accountType) throws IOException {
+        this(accountType, new Mastercard());
     }
 
     public double getBalance() {
@@ -60,7 +82,8 @@ public class Account{
                 + getBalance()+","
                 + getOverdraftCount() + ","
                 + getOverdraftFees() + ","
-                + isActive();
+                + isActive() + "," +
+                getCard().getCardName();
     }
 
     public static void readLastAccountId() throws IOException{
@@ -98,7 +121,10 @@ public class Account{
             String[] parts = line.split(",");
             int id =Integer.parseInt(parts[1].substring(2));
             if(parts[1].equals(accountId)){
-                    account = new Account(id, parts[2], Double.parseDouble(parts[3]));
+                    account = new Account(id, parts[2], Double.parseDouble(parts[3]),Integer.parseInt(parts[4]),
+                            Double.parseDouble(parts[5]),
+                            Boolean.parseBoolean(parts[6]),
+                            parts[7]);
                     br.close();
                     return account;
             }
@@ -143,6 +169,18 @@ public class Account{
             setActive(true);
             FileManager.updateAccounts(customer, this);
             System.out.println("Account reactivated successfully.");
+        }
+    }
+
+    public DebitCard getCard(){
+        return card;
+    }
+
+    public void setCard(DebitCard card) {
+        if(card == null){
+            this.card = new Mastercard();
+        }else{
+            this.card = card;
         }
     }
 

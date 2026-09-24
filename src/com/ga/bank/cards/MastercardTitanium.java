@@ -33,4 +33,9 @@ public class MastercardTitanium extends DebitCard{
         return this.depositLimitOwnAccount;
     }
 
+    @Override
+    public String getCardName() {
+        return "Titanium";
+    }
+
 }

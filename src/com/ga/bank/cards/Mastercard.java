@@ -33,4 +33,9 @@ public class Mastercard extends DebitCard {
         return this.depositLimitOwnAccount;
     }
 
+    @Override
+    public String getCardName() {
+        return "Mastercard";
+    }
+
 }

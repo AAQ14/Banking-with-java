@@ -33,4 +33,10 @@ public class MastercardPlatinum extends DebitCard{
         return this.depositLimitOwnAccount;
     }
 
+    @Override
+    public String getCardName() {
+        return "Platinum";
+    }
+
+
 }

@@ -27,6 +27,8 @@ public abstract class DebitCard {
 
     public abstract double getDepositLimitOwnAccount();
 
+    public abstract String getCardName();
+
     //Mutator methods
 
     public void setDepositLimitOwnAccount(double depositLimitOwnAccount) {
