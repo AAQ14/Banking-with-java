@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Auth {
     public static Scanner scanner= new Scanner(System.in);
@@ -21,7 +20,7 @@ public class Auth {
         fm = new FileManager();
     }
 
-    public static void signUp() throws IOException, NoSuchAlgorithmException {
+    public static User signUp() throws IOException, NoSuchAlgorithmException {
         String firstName; String lastName; String userName; String email; String password; String userType;
         System.out.println("Enter first name: ");
         firstName = scanner.next();
@@ -51,6 +50,7 @@ public class Auth {
         }
 
 
+        return null;
     }
 
     public static User signIn() throws IOException, NoSuchAlgorithmException {
@@ -171,6 +171,7 @@ public class Auth {
                     FileManager.updateUser(user);
 
                     System.out.println(username + "logged in");
+                    Services.bankerServices((Banker) user);
                     return user;
                 }
             }
@@ -179,6 +180,7 @@ public class Auth {
         br.close();
         if(user==null){
             System.out.println("login failed");
+            System.exit(0);
             return null;
         }
 

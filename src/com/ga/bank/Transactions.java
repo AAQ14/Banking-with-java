@@ -12,17 +12,11 @@ import java.util.Scanner;
 import java.util.Optional;
 
 public class Transactions {
-//    public User user;
 
     public static Customer customer;
     public static Scanner scanner = new Scanner(System.in);
     public static FileReader fr;
     public static BufferedReader br;
-
-
-//    public Transactions(User user) {
-//        this.user = user;
-//    }
 
     public Transactions(Customer customer){
         this.customer = customer;

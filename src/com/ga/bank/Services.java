@@ -4,6 +4,7 @@ import com.ga.bank.cards.MastercardPlatinum;
 import com.ga.bank.cards.MastercardTitanium;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -56,7 +57,7 @@ public class Services {
                 System.out.println("Select the account you want to create: ");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
                 if (accountSelected == 1) {
                     Account.readLastAccountId();
                     System.out.println(customer.accounts);
@@ -71,7 +72,7 @@ public class Services {
                 System.out.println("in which account you want to deposit");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
                 if (accountSelected == 1) {
                     System.out.println("how much do u want to deposit");
                     double amount = readAmount();
@@ -94,7 +95,7 @@ public class Services {
                 System.out.println("in which account you want to withdraw");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
                 if (accountSelected == 1) {
                     System.out.println("how much do u want to withdraw");
                     double amount = readAmount();
@@ -120,7 +121,7 @@ public class Services {
                 System.out.println("from which account you want to transfer? ");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
                 if (accountSelected == 1) {
                     selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
                 } else if  (accountSelected == 2){
@@ -138,7 +139,7 @@ public class Services {
                 System.out.println("which account u want to reactivate? ");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
 
                 if (accountSelected == 1) {
                     selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
@@ -178,7 +179,7 @@ public class Services {
                 System.out.println("which account do you want to update the card for?");
                 System.out.println("1. Saving account");
                 System.out.println("2. Checking account");
-                int accountSelected = scanner.nextInt();
+                int accountSelected = readInt();
 
                 if (accountSelected == 1) {
                     selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
@@ -190,7 +191,7 @@ public class Services {
                     System.out.println("choose the updated card: ");
                     System.out.println("1. Mastercard Titanium");
                     System.out.println("2. Mastercard Platinum");
-                    int cardChoice = scanner.nextInt();
+                    int cardChoice = readInt();
 
                     if(cardChoice ==1){
                         selectedAccount.get().setCard(new MastercardTitanium());
@@ -210,11 +211,34 @@ public class Services {
                 }
             }else if(service ==9){
                 running = false;
+                System.out.println("Goodbye!");
+                System.exit(0);
             }else{
                 System.out.println("invalid choice, please choose a number from 1 to 9.");
             }
         }
 
+    }
+
+    public static void bankerServices(Banker banker) throws IOException, NoSuchAlgorithmException {
+        boolean running = true;
+        while (running){
+            System.out.println("Banker services");
+            System.out.println("1. Add new customer");
+            System.out.println("2. Logout");
+            int choice =readInt();
+
+            if(choice ==1){
+                User newCustomer = Auth.signUp();
+
+            }else if(choice ==2){
+                System.out.println("Goodbye!");
+                running = false;
+                System.exit(0);
+            }else{
+                System.out.println("invalid choice, please choose a number 1 or 2");
+            }
+        }
     }
 
 }
