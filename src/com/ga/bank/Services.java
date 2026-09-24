@@ -1,5 +1,8 @@
 package com.ga.bank;
 
+import com.ga.bank.cards.MastercardPlatinum;
+import com.ga.bank.cards.MastercardTitanium;
+
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
@@ -18,6 +21,7 @@ public class Services {
         System.out.println("5. Reactivate account");
         System.out.println("6. View transaction history");
         System.out.println("7. Filter Transactions");
+        System.out.println("8. Update debit card");
         int service = scanner.nextInt();
         if (service == 1) {
             System.out.println("Select the account you want to create: ");
@@ -139,6 +143,41 @@ public class Services {
                     System.out.println(trans);
                     System.out.println("-------------------------------------------------------------");
                 }
+            }
+        }else if (service==8){
+            Optional<Account> selectedAccount = Optional.empty();
+            System.out.println("which account do you want to update the card for?");
+            System.out.println("1. Saving account");
+            System.out.println("2. Checking account");
+            int accountSelected = scanner.nextInt();
+
+            if (accountSelected == 1) {
+                selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Saving")).findFirst();
+            } else if (accountSelected == 2){
+                selectedAccount = customer.accounts.stream().filter(a -> a.accountType.equals("Checking")).findFirst();
+            }
+
+            if(selectedAccount.isPresent()){
+                System.out.println("choose the updated card: ");
+                System.out.println("1. Mastercard Titanium");
+                System.out.println("2. Mastercard Platinum");
+                int cardChoice = scanner.nextInt();
+
+                if(cardChoice ==1){
+                    selectedAccount.get().setCard(new MastercardTitanium());
+                    FileManager.updateAccounts(customer, selectedAccount.get());
+                    System.out.println("card updated");
+                } else if(cardChoice ==2){
+                    selectedAccount.get().setCard(new MastercardPlatinum());
+                    FileManager.updateAccounts(customer, selectedAccount.get());
+                    System.out.println("card updated");
+                } else{
+                    System.out.println("invalid choice, the card was not changed.");
+                }
+
+
+            } else{
+                System.out.println("Account is not found. ");
             }
         }
     }
